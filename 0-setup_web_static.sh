@@ -2,17 +2,22 @@
 # sets up the web servers for the deployment of web_static.
 
 sudo apt update
-sudo apt install nginx
+sudo apt install -y nginx
 
-sudo mkdir -p /data/web_static/releases/test/
-sudo tee -a /data/web_static/releases/test/index.html > /dev/null <<EOT
-<!DOCTYPE html>
-<body>
+sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
+
+echo "<!DOCTYPE html>
+  <head>
+  </head>
+  <body>
     <h1>AirBnb Clone</h1>
-</body>
-</html>
-EOT
+  </body>
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
-sudo ln -sf /data/web_static/current /data/web_static/releases/test/
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
-sudo -R chown ubuntu:ubuntu /data/
+sudo chown -R ubuntu:ubuntu /data/
+
+sudo sed -i "/server_name _;/a \\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\\n" /etc/nginx/sites-available/default
+
+sudo service nginx restart
