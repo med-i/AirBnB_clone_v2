@@ -66,3 +66,4 @@ class DBStorage:
         """Closes the session"""
         if self.__session:
             self.__session.remove()
+        self.reload()
