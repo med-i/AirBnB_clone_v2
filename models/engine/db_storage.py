@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 This module defines a class to manage database storage for hbnb clone
 """
@@ -63,4 +64,5 @@ class DBStorage:
 
     def close(self):
         """Closes the session"""
-        self.__session.remove()
+        if self.__session:
+            self.__session.remove()
