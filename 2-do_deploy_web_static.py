@@ -11,6 +11,7 @@ env.key_filename = "/home/med/.ssh/id_rsa"
 
 
 def do_deploy(archive_path):
+    """Deploy web_static"""
     file_name = archive_path.split("/")[-1]
     base_dir = file_name.split(".")[0]
     release_path = f"/data/web_static/releases/{base_dir}/"
